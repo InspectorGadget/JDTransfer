@@ -1,0 +1,9 @@
+name: JDTransfer
+version: 1.0.0-beta
+main: RTG\JDT\Loader
+api: 2.1.0
+author: IG
+
+commands:
+    transfer:
+        description: "Transfer Command!"

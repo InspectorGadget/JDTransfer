@@ -13,7 +13,7 @@ use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
 use pocketmine\utils\TextFormat as TF;
 
-class TransferCommand implements CommandExecutor {
+class Transfer implements CommandExecutor {
     
     public $plugin;
     
@@ -24,9 +24,9 @@ class TransferCommand implements CommandExecutor {
     public function onCommand(CommandSender $sender, Command $cmd, $label, array $param) {
         switch(strtolower($cmd->getName())) {
                 
-                case "transfer":
+                case "jdt":
                     
-                    $sender->sendMessage("[Transfer] /transfer [ServerName]");
+                    $sender->sendMessage("[Transfer] /jdt [ServerName]");
                     $sender->sendMessage(" ");
                     $sender->sendMessage("[Transfer] Server List: Revolution," . TF::GREEN . "JDE, JDB, JDMulti, BC, JDC, JDU, IB, JDCustom");
                     $sender->sendMessage("[Transfer]" . TF::RED . "If i miss any names out, please let me know - IG");
@@ -54,7 +54,7 @@ class TransferCommand implements CommandExecutor {
                                
                         }
                         else {
-                            $sender->sendMessage("Usage: /transfer");
+                            $sender->sendMessage("Usage: /jdt");
                         }
                         
                         

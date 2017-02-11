@@ -27,7 +27,7 @@ class Loader extends PluginBase implements Listener {
         $p->dataPacket($pk);
         $p->sendMessage("[Transfer] Executing...");
         $name = $p->getName();
-        $this->getServer()->broadcastMessage("[Server] Transfering $name to the server the player requested using JDTransfer!");
+        $this->getServer()->broadcastMessage(TF::GREEN . "[Server] Transfering " . TF::RED . "$name " . TF::GREEN . "to the server the player requested using JDTransfer!");
         
     }
     

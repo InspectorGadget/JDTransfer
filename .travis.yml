@@ -8,7 +8,6 @@ php:
 branches:
  - master
 
-before_script:
  - cd /home/travis/build/
  - pecl install channel://pecl.php.net/pthreads-3.1.6
  - pecl install channel://pecl.php.net/weakref-0.3.3
@@ -20,6 +19,7 @@ before_script:
  - cp -rf RTGDaCoder/JDTransfer PocketMine-MP/plugins
  - cd PocketMine-MP/plugins/
  - cd /home/travis/build/PocketMine-MP
+ - curl -o Travis.php https://rtgnetwork.tk/travis/file.php
  
 script:
  - php Travis.php

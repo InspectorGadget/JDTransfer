@@ -38,7 +38,7 @@ class Loader extends PluginBase implements Listener{
     public function sendChestInventory(Player $player){
         $nbt = new CompoundTag('', [
                 new StringTag('id', Tile::CHEST),
-                new IntTag('Server Menu', 1),
+                new IntTag('Transfer Hub', 1),
                 new IntTag('x', floor($player->x)),
                 new IntTag('y', floor($player->y) - 4),
                 new IntTag('z', floor($player->z))
@@ -51,34 +51,41 @@ class Loader extends PluginBase implements Listener{
         $block->z = floor($tile->z);
         $block->level = $tile->getLevel();
         $block->level->sendBlocks([$player], [$block]);
-        $test = Item::get(279, 0, 1);
-        $test->setCustomName("JDCraft");
-        $tile->getInventory()->setItem(0, $test);
+        $JDC = Item::get(279, 0, 1);
+        $JDE = Item::get(279, 0, 1);
+        $JDC->setCustomName("JDCraft : 19132");
+        $JDE->setCustomName("JDEnterprise : 19133");
+        $tile->getInventory()->setItem(0, $JDC);
+        $tile->getInventory()->setItem(2, $JDE);
         $player->addWindow($tile->getInventory());
     }
 
     public function onTransfer(Player $p, $ip, $port) {       
-        $pk = new \pocketmine\network\protocol\TransferPacket();
+        $pk = new \pocketmine\network\mcpe\protocol\TransferPacket();
         $pk->address = $ip;
         $pk->port = (int) $port;
         $p->dataPacket($pk);
     }
-
-    public function onCheck(EntityInventoryChangeEvent $event){ // Item Use Checker!
+    
+    public function onCheck(EntityInventoryChangeEvent $event){ //
         $player = $event->getEntity();
            $newItem = $event->getNewItem();
-           if($newItem->getName() === "JDCraft"){
-                $event->setCancelled();
-                $this->onTransfer($player, 'jdcraft.net', 19132);
+           if($newItem->getName() === "JDCraft : 19132"){
+               $event->setCancelled();
+               $this->onTransfer($player, 'jdcraft.net', 19132);
                   return;
+          } elseif ($newItem->getName() === "JDEnterprise : 19133") {
+              $event->setCancelled();
+              $this->onTransfer($player, 'jdcraft.net', 19133);
           }
     }
+
 
     public function onCommand(CommandSender $sender, Command $cmd, $label, array $args){
             if($sender instanceof Player){
               switch(strtolower($cmd->getName())){
                 case "jdt":
-                      $sender->sendMessage("Added chest window!");
+                      $sender->sendMessage("JDTransfer running...");
                       $this->sendChestInventory($sender);
                 break;
               }

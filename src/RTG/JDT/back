@@ -1,0 +1,33 @@
+    public function sendChestInventory(Player $player){
+        $nbt = new CompoundTag('', [
+                new StringTag('id', Tile::CHEST),
+                new IntTag('Transfer Hub', 1),
+                new IntTag('x', floor($player->x)),
+                new IntTag('y', floor($player->y) - 4),
+                new IntTag('z', floor($player->z))
+        ]);
+		
+        $tile = Tile::createTile('Chest', $player->getLevel(), $nbt);
+        $block = Block::get(Block::CHEST);
+        $block->x = floor($tile->x);
+        $block->y = floor($tile->y);
+        $block->z = floor($tile->z);
+        $block->level = $tile->getLevel();
+        $block->level->sendBlocks([$player], [$block]);
+        $JDC = Item::get(279, 0, 1);
+        $JDE = Item::get(279, 0, 1);
+        $BC = Item::get(279, 0, 1);
+        $JDC->setCustomName(TF::YELLOW . "JDCraft : 19132\n " . TF::RED . $this->pullData('jdcraft') . " players online!");
+        $BC->setCustomName(TF::RED . "BlazeCraft : 20000\n " . TF::RED . $this->pullData('BlazeCraft') . " players online!");
+        $tile->getInventory()->setItem(0, $JDC);
+        $tile->getInventory()->setItem(2, $JDE);
+        $tile->getInventory()->setItem(4, $BC);
+        $player->addWindow($tile->getInventory());
+    }
+
+        public function onTransfer(Player $p, $ip, $port) {       
+        $pk = new \pocketmine\network\mcpe\protocol\TransferPacket();
+        $pk->address = $ip;
+        $pk->port = (int) $port;
+        $p->dataPacket($pk);
+    }
